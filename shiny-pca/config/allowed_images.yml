@@ -1,0 +1,21 @@
+# This file lists acceptable images to allow runing.
+#
+# This allows you, the admin, to create multiple flavours
+# for your users to run. E.g. maybe you need a geosciences flavour,
+# you can create the image based on our default image and add the
+# appropriate `apt-get/pip install` statements.
+# image: workflow4metabolomics/shiny_chromato_visualization
+---
+-
+    image: gie-shiny-pca
+    description: |
+        Test image
+#-
+#    image: quay.io/workflow4metabolomics/gie-shiny-chromato:latest
+#    description: |
+#        Test chromatogram visualization
+#-
+#    image: quay.io/workflow4metabolomics/gie-shiny-other:latest
+#    mako: file.mako
+#    description : |
+#      Map observations and plot data
