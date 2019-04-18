@@ -6,11 +6,16 @@
 # appropriate `apt-get/pip install` statements.
 # image: workflow4metabolomics/shiny_chromato_visualization
 ---
-#-
-#    image: gie-shiny-pca
-#    description: |
-#        Test image
 -
-    image: quay.io/workflow4metabolomics/gie-shiny-pca:latest
+    image: gie-shiny-nmr
     description: |
-        Test chromatogram visualization
+        Test image
+#-
+#    image: quay.io/workflow4metabolomics/gie-shiny-chromato:latest
+#    description: |
+#        Test chromatogram visualization
+#-
+#    image: quay.io/workflow4metabolomics/gie-shiny-other:latest
+#    mako: file.mako
+#    description : |
+#      Map observations and plot data

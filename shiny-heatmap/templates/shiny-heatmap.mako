@@ -24,8 +24,9 @@ ie_request.attr.docker_port = 3838
 
 #dataset_classes = ["MzXML", "MzML", "NetCDF", "Data", "RData", "RdataMsnbaseRaw", "RdataXcmsFindChromPeaks", "RdataXcmsGroup", "RdataXcmsRetcor", "Tabular"]
 
-main_dataset = ie_request.volume(hda.file_name, '/srv/shiny-server/samples/chromato_visu/inputdata.tsv')
-#main_dataset = ie_request.volume(hda.file_name, '/srv/shiny-server/samples/chromato_visu/inputdata.tsv', how='ro')
+#main_dataset = ie_request.volume(hda.file_name, '/srv/shiny-server/samples/heatmap/inputdata.tsv', how='ro')
+#main_dataset = ie_request.volume(hda.file_name, '/srv/shiny-server/samples/heatmap/inputdata.tsv', mode='ro')
+main_dataset = ie_request.volume('/srv/shiny-server/samples/heatmap/inputdata.tsv', hda.file_name, mode='ro')
 #dataset_list = []
 #dataset_list.append(main_dataset)
 
@@ -41,7 +42,7 @@ main_dataset = ie_request.volume(hda.file_name, '/srv/shiny-server/samples/chrom
 
 ie_request.launch(volumes=[main_dataset],env_override={
 #ie_request.launch(volumes=dataset_list,env_override={
-    'PUB_HOSTNAME': ie_request.attr.HOST,
+    'PUB_HOSTNAME': ie_request.attr.HOST
 })
 
 ## General IE specific
@@ -50,7 +51,7 @@ ie_request.launch(volumes=[main_dataset],env_override={
 # through proxy.
 #notebook_access_url = ie_request.url_template('${PROXY_URL}/?bam=http://localhost/tmp/bamfile.bam')
 #notebook_access_url = ie_request.url_template('${PROXY_URL}/?')
-notebook_access_url = ie_request.url_template('${PROXY_URL}/samples/chromato_visu/?')
+notebook_access_url = ie_request.url_template('${PROXY_URL}/samples/heatmap/?')
 #notebook_pubkey_url = ie_request.url_template('${PROXY_URL}/rstudio/auth-public-key')
 #notebook_access_url = ie_request.url_template('${PROXY_URL}/rstudio/')
 #notebook_login_url =  ie_request.url_template('${PROXY_URL}/rstudio/auth-do-sign-in')
@@ -69,7 +70,7 @@ ${ ie.load_default_js() }
         var notebook_access_url = '${ notebook_access_url }';
         ${ ie.plugin_require_config() }
 
-        requirejs(['interactive_environments', 'plugin/bam_iobio'], function(){
+        requirejs(['galaxy.interactive_environments', 'plugin/heatmap'], function(){
             display_spinner();
         });
 
@@ -81,11 +82,12 @@ ${ ie.load_default_js() }
 
         var startup = function(){
            // Load notebook
-           requirejs(['interactive_environments', 'plugin/bam_iobio'], function(){
-           //requirejs(['interactive_environments'], function(){
-                load_notebook(notebook_access_url);
+           requirejs(['galaxy.interactive_environments','plugin/heatmap'], function(IES){
+	      window.IES = IES
+	      IES.load_when_ready(ie_readiness_url, function(){
+	          load_notebook(notebook_access_url);
+	      });
            });
-
         };
         // sleep 5 seconds
         // this is currently needed to get the vis right

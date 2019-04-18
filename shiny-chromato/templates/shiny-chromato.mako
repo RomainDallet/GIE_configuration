@@ -24,7 +24,8 @@ ie_request.attr.docker_port = 3838
 
 dataset_classes = ["MzXML", "MzML", "NetCDF"]
 
-main_dataset = ie_request.volume(hda.file_name, '/srv/shiny-server/samples/chromato_visu/inputdata.dat', how='ro')
+#main_dataset = ie_request.volume(hda.file_name, '/srv/shiny-server/samples/chromato_visu/inputdata.dat', how='ro')
+main_dataset = ie_request.volume('/srv/shiny-server/samples/chromato_visu/inputdata.dat', hda.file_name, mode='ro')
 dataset_list = []
 dataset_list.append(main_dataset)
 
@@ -32,7 +33,8 @@ for dataset in hda.history.datasets :
 	if dataset.name == hda.name :
 		continue	
 	if dataset.datatype.__class__.__name__ in dataset_classes :
-		other_dataset = ie_request.volume(dataset.file_name, '/srv/shiny-server/samples/chromato_visu/%s'%dataset.name, how='ro')
+		#other_dataset = ie_request.volume(dataset.file_name, '/srv/shiny-server/samples/chromato_visu/%s'%dataset.name, how='ro')
+		other_dataset = ie_request.volume('/srv/shiny-server/samples/chromato_visu/%s'%dataset.name, dataset.file_name, mode='ro')
 		if other_dataset not in dataset_list :
 			dataset_list.append(other_dataset)
 		else :
@@ -69,7 +71,7 @@ ${ ie.load_default_js() }
         var notebook_access_url = '${ notebook_access_url }';
         ${ ie.plugin_require_config() }
 
-        requirejs(['interactive_environments', 'plugin/bam_iobio'], function(){
+        requirejs(['galaxy.interactive_environments', 'plugin/chromato'], function(){
             display_spinner();
         });
 
@@ -81,13 +83,14 @@ ${ ie.load_default_js() }
 
         var startup = function(){
            // Load notebook
-           requirejs(['interactive_environments', 'plugin/bam_iobio'], function(){
-           //requirejs(['interactive_environments'], function(){
-                load_notebook(notebook_access_url);
+           requirejs(['galaxy.interactive_environments','plugin/chromato'], function(IES){
+              window.IES = IES
+              IES.load_when_ready(ie_readiness_url, function(){
+                  load_notebook(notebook_access_url);
+              });
            });
-
-        };
-        // sleep 5 seconds
+        };        
+	// sleep 5 seconds
         // this is currently needed to get the vis right
         // plans exists to move this spinner into the container
         setTimeout(startup, 5000);

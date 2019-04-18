@@ -24,8 +24,8 @@ ie_request.attr.docker_port = 3838
 
 #dataset_classes = ["MzXML", "MzML", "NetCDF", "Data", "RData", "RdataMsnbaseRaw", "RdataXcmsFindChromPeaks", "RdataXcmsGroup", "RdataXcmsRetcor", "Tabular"]
 
-#main_dataset = ie_request.volume(hda.file_name, '/srv/shiny-server/samples/pca/inputdata.tsv', how='ro')
-main_dataset = ie_request.volume('/srv/shiny-server/samples/pca/inputdata.tsv', hda.file_name, mode='ro')
+#main_dataset = ie_request.volume(hda.file_name, '/srv/shiny-server/samples/nmr/inputdata.tsv', how='ro')
+main_dataset = ie_request.volume('/srv/shiny-server/samples/nmr/inputdata.tsv', hda.file_name, mode='ro')
 #dataset_list = []
 #dataset_list.append(main_dataset)
 
@@ -50,7 +50,7 @@ ie_request.launch(volumes=[main_dataset],env_override={
 # through proxy.
 #notebook_access_url = ie_request.url_template('${PROXY_URL}/?bam=http://localhost/tmp/bamfile.bam')
 #notebook_access_url = ie_request.url_template('${PROXY_URL}/?')
-notebook_access_url = ie_request.url_template('${PROXY_URL}/samples/pca/?')
+notebook_access_url = ie_request.url_template('${PROXY_URL}/samples/nmr/?')
 #notebook_pubkey_url = ie_request.url_template('${PROXY_URL}/rstudio/auth-public-key')
 #notebook_access_url = ie_request.url_template('${PROXY_URL}/rstudio/')
 #notebook_login_url =  ie_request.url_template('${PROXY_URL}/rstudio/auth-do-sign-in')
@@ -69,7 +69,7 @@ ${ ie.load_default_js() }
         var notebook_access_url = '${ notebook_access_url }';
         ${ ie.plugin_require_config() }
 
-        requirejs(['galaxy.interactive_environments', 'plugin/pca'], function(){
+        requirejs(['galaxy.interactive_environments', 'plugin/nmr'], function(){
             display_spinner();
         });
 
@@ -81,7 +81,7 @@ ${ ie.load_default_js() }
 
         var startup = function(){
            // Load notebook
-           requirejs(['galaxy.interactive_environments','plugin/pca'], function(IES){
+           requirejs(['galaxy.interactive_environments','plugin/nmr'], function(IES){
               window.IES = IES
               IES.load_when_ready(ie_readiness_url, function(){
                   load_notebook(notebook_access_url);

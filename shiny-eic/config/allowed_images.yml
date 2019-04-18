@@ -6,11 +6,7 @@
 # appropriate `apt-get/pip install` statements.
 # image: workflow4metabolomics/shiny_chromato_visualization
 ---
-#-
-#    image: gie-shiny-pca
-#    description: |
-#        Test image
 -
-    image: quay.io/workflow4metabolomics/gie-shiny-pca:latest
+    image: gie-shiny-eic
     description: |
-        Test chromatogram visualization
+        Test image
