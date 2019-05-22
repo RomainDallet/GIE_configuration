@@ -4,9 +4,9 @@
 # for your users to run. E.g. maybe you need a geosciences flavour,
 # you can create the image based on our default image and add the
 # appropriate `apt-get/pip install` statements.
-# image: workflow4metabolomics/shiny_chromato_visualization
+# image: quay.io/workflow4metabolomics/gie-shiny
 ---
 -
     image: quay.io/workflow4metabolomics/gie-shiny-pca:latest
     description: |
-        Test chromatogram visualization
+        Principal Component Analysis visualization
