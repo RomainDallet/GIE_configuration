@@ -7,11 +7,7 @@
 # image: workflow4metabolomics/shiny_chromato_visualization
 ---
 -
-    image: gie-shiny-heatmap
-    description: |
-        Test image
-#-
-#    image: quay.io/workflow4metabolomics/gie-shiny-other:latest
-#    mako: file.mako
-#    description : |
-#      Map observations and plot data
+    image: quay.io/workflow4metabolomics/gie-shiny-other:latest
+    mako: file.mako
+    description : |
+      Map observations and plot data

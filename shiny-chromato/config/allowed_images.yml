@@ -8,10 +8,6 @@
 # image: workflow4metabolomics/shiny_chromato_visualization
 ---
 -
-    image: gie-shiny-chromato
+    image: quay.io/workflow4metabolomics/gie-shiny-chromato:latest
     description: |
-        Image test for TIC and BPC
-#-
-#    image: quay.io/workflow4metabolomics/gie-shiny-chromato:latest
-#    description: |
-#        Total Ion Chromatogram and Base Peak Chromatogram visualization
+        Total Ion Chromatogram and Base Peak Chromatogram visualization
