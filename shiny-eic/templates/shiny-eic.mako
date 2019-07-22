@@ -9,8 +9,6 @@ import subprocess
 ie_request.load_deploy_config()
 ie_request.attr.docker_port = 3838
 
-#dataset_classes = ["MzXML", "MzML", "NetCDF", "Data", "RData", "RdataMsnbaseRaw", "RdataXcmsFindChromPeaks", "RdataXcmsGroup", "RdataXcmsRetcor", "Tabular"]
-
 main_dataset = ie_request.volume('/srv/shiny-server/samples/eic/inputdata.dat', hda.file_name, mode='ro')
 
 ie_request.launch(volumes=[main_dataset],env_override={
@@ -19,8 +17,6 @@ ie_request.launch(volumes=[main_dataset],env_override={
 
 ## General IE specific
 # Access URLs for the notebook from within galaxy.
-# TODO: Make this work without pointing directly to IE. Currently does not work
-# through proxy.
 #notebook_access_url = ie_request.url_template('${PROXY_URL}/?')
 notebook_access_url = ie_request.url_template('${PROXY_URL}/samples/eic/?')
 

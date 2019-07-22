@@ -9,22 +9,8 @@ import subprocess
 ie_request.load_deploy_config()
 ie_request.attr.docker_port = 3838
 
-
-# Create tempdir in galaxy
-#temp_dir = ie_request.temp_dir
-#PASSWORD = ie_request.notebook_pw
-#USERNAME = "galaxy"
-
-# Did the user give us an RData file?
-#if hda.datatype.__class__.__name__ == "RData":
-#    shutil.copy( hda.file_name, os.path.join(temp_dir, '.RData') )
-#will put the right file here  
-#data type definition
-#/galaxy-central/lib/galaxy/datatypes  
-
 dataset_classes = ["MzXML", "MzML", "NetCDF"]
 
-#main_dataset = ie_request.volume(hda.file_name, '/srv/shiny-server/samples/chromato_visu/inputdata.dat', how='ro')
 main_dataset = ie_request.volume('/srv/shiny-server/samples/chromato_visu/inputdata.dat', hda.file_name, mode='ro')
 dataset_list = []
 dataset_list.append(main_dataset)
@@ -33,14 +19,12 @@ for dataset in hda.history.datasets :
 	if dataset.name == hda.name :
 		continue	
 	if dataset.datatype.__class__.__name__ in dataset_classes :
-		#other_dataset = ie_request.volume(dataset.file_name, '/srv/shiny-server/samples/chromato_visu/%s'%dataset.name, how='ro')
 		other_dataset = ie_request.volume('/srv/shiny-server/samples/chromato_visu/%s'%dataset.name, dataset.file_name, mode='ro')
 		if other_dataset not in dataset_list :
 			dataset_list.append(other_dataset)
 		else :
 			dataset_list.replace(other_dataset, other_dataset)
 
-#ie_request.launch(volumes=[main_dataset],env_override={
 ie_request.launch(volumes=dataset_list,env_override={
     'PUB_HOSTNAME': ie_request.attr.HOST,
     'ORIGIN_FILENAME': hda.name,
@@ -48,14 +32,8 @@ ie_request.launch(volumes=dataset_list,env_override={
 
 ## General IE specific
 # Access URLs for the notebook from within galaxy.
-# TODO: Make this work without pointing directly to IE. Currently does not work
-# through proxy.
 #notebook_access_url = ie_request.url_template('${PROXY_URL}/?')
 notebook_access_url = ie_request.url_template('${PROXY_URL}/samples/chromato_visu/?')
-#notebook_pubkey_url = ie_request.url_template('${PROXY_URL}/rstudio/auth-public-key')
-#notebook_access_url = ie_request.url_template('${PROXY_URL}/rstudio/')
-#notebook_login_url =  ie_request.url_template('${PROXY_URL}/rstudio/auth-do-sign-in')
-#notebook_access_url = ie_request.url_template('${PROXY_URL}/?bam=http://localhost/tmp/bamfile.bam')
 
 root = h.url_for( '/' )
 
